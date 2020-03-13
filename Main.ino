@@ -23,7 +23,7 @@ CRGB leds[NUM_LEDS];
 #define SCORE_PIN 10
 #define NUMBER_OF_SCORE_PINS 6
 #define MAX_TIME_MILLIS 60000
-#define RED_MILLIS 10000
+#define RED_MILLIS 5000
 
 bool previousState[NUMBER_OF_SCORE_PINS], state[NUMBER_OF_SCORE_PINS];
 unsigned long previousTime, currentTime, differenceTime;
@@ -101,16 +101,6 @@ void loop() {
       }
     }
 
-/*
-    if ( (differenceTime - RED_MILLIS) % ((MAX_TIME_MILLIS - RED_MILLIS) / 1500) == 0) {
-      if (red < 255 && green == 255) {
-        red++;
-      } 
-      if (green > 0 && red == 255) {
-        green--;
-      }
-    }
-*/
     if (differenceTime % 500 == 0) {
       if ( (differenceTime < timeToYellow) && (red < 240) ) {
         red += 15;
@@ -140,13 +130,13 @@ void loop() {
   setDisplay(color);
 
   for (int i = 0; i < scoreboard + 1; i += 10) {
-    if (i < scoreboard - 260) i += 120;
+    if (i < scoreboard - 300) i += 40;
     displayNumber(i);
     FastLED.show();
     delay(150);
   }
 
-  delay(4000);
+  delay(10000);
 
   while (true) {
 
