@@ -23,7 +23,7 @@ CRGB leds[NUM_LEDS];
 #define SCORE_PIN 10
 #define NUMBER_OF_SCORE_PINS 6
 #define MAX_TIME_MILLIS 60000
-#define RED_MILLIS 5000
+#define MILLIS_TO_FLASH 5000
 
 bool previousState[NUMBER_OF_SCORE_PINS], state[NUMBER_OF_SCORE_PINS];
 unsigned long previousTime, currentTime, differenceTime;
@@ -113,7 +113,7 @@ void loop() {
     color = CRGB(red, green, 0);
     setDisplay(color);
 
-    if (differenceTime >= MAX_TIME_MILLIS - RED_MILLIS && differenceTime % 500 < 250) {
+    if (differenceTime >= MAX_TIME_MILLIS - MILLIS_TO_FLASH && differenceTime % 500 < 250) {
       clearDisplay();
     } else {
       displayNumber(scoreboard);
