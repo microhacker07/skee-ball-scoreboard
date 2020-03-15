@@ -53,7 +53,13 @@ byte play_text[] = {
   B1100100, // L
   B1011111, // A
   B0111101  // Y
-  };
+};
+
+byte box[] = {
+  B0001111, // Top
+  B1111000  // Bottom
+  B0000000  // Blank
+};
 
 void setup() {
   //delay( 1000 ); // power-up safety delay
@@ -155,13 +161,13 @@ void loop() {
 
   pattern_position = 0;
 
-  int randomInt = random(0, 3);
+  int randomInt = random(0, 4);
 
-  for (int i = 0; i < 50; i++) {
+  for (int i = 0; i < 80; i++) {
     clearDisplay();
 
-    switch (randomInt) {
-      case 0:
+    switch (randomInt) { // Animations
+      case 0: // One Line Rotating around the center
       display_1.simplePattern(leds, pattern_position, rotate_pattern);
       display_2.simplePattern(leds, pattern_position, rotate_pattern);
       display_3.simplePattern(leds, 6 - pattern_position, rotate_pattern);
@@ -170,7 +176,7 @@ void loop() {
       pattern_position = (pattern_position + 1) % 6;
       break;
       
-      case 1:
+      case 1: // Two Lines Rotating around the center
       display_1.getSegmentFromPattern(leds, pattern_position, two_rotate_pattern);
       display_2.getSegmentFromPattern(leds, pattern_position, two_rotate_pattern);
       display_3.getSegmentFromPattern(leds, 3 - pattern_position, two_rotate_pattern);
@@ -179,7 +185,7 @@ void loop() {
       pattern_position = (pattern_position + 1) % 3;
       break;
 
-      case 2:
+      case 2: // Flashing Play Text
       display_1.getSegmentFromPattern(leds, 3, play_text);
       display_2.getSegmentFromPattern(leds, 2, play_text);
       display_3.getSegmentFromPattern(leds, 1, play_text);
@@ -188,6 +194,22 @@ void loop() {
       if ( pattern_position % 10 < 3 ) clearDisplay();
 
       pattern_position += 1;
+      break;
+
+      case 3: // Box
+      clearDisplay();
+
+      if (pattern_position == 0 || pattern_position == 7) {
+        display_1.getSegmentFromPattern(leds, (pattern_position - 0) / 7, box);
+      } else if (pattern_position == 1 || pattern_position == 6) {
+        display_2.getSegmentFromPattern(leds, (pattern_position - 1) / (6 - 1), box);
+      } else if (pattern_position == 2 || pattern_position == 5) {
+        display_3.getSegmentFromPattern(leds, (pattern_position - 2) / (5 - 2), box);
+      } else {
+        display_4.getSegmentFromPattern(leds, (pattern_position - 3) / (4 - 3), box);
+      }
+
+      pattern_position = (pattern_position + 1) % 8;
       break;
     }
     FastLED.show();
