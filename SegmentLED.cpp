@@ -10,46 +10,42 @@ This library has a dependency on the FastLED library.
 Created by Nathaniel Bock
 */
 
-SegmentLED::SegmentLED(CRGB leds[], int last_led, int segment) {
+SegmentLED::SegmentLED(int last_led, int segment) {
   end_led = last_led;
   segment_size = segment;
-
-  for (int i = 0; i < segment_size * 7; i++) {
-    segment_leds[i] = &leds[end_led - i];
-  }
 }
 
-void SegmentLED::getSegmentFromPattern(int index, byte pattern[]) {
+void SegmentLED::getSegmentFromPattern(CRGB leds[], int index, byte pattern[]) {
   for (int current_led = 0; current_led < segment_size * 7; current_led++) {
     if ( bitRead( pattern[ index ], current_led / segment_size ) ) {
-      *segment_leds[current_led] = display_color;
+      leds[ end_led - current_led ] = display_color;
     }
   }
 }
 
-void SegmentLED::displayOff() {
+void SegmentLED::displayOff(CRGB leds[]) {
   for (int current_led = 0; current_led < segment_size * 7; current_led++) {
-    *segment_leds[current_led] = CRGB::Black;
+    leds[ end_led - current_led ] = CRGB::Black;
   }
 }
 
-void SegmentLED::displayDigit(int digit) {
-  displayOff();
-  getSegmentFromPattern(digit, segment_from_hex);
+void SegmentLED::displayDigit(CRGB leds[], int digit) {
+  displayOff(leds);
+  getSegmentFromPattern(leds, digit, segment_from_hex);
 }
 
-void SegmentLED::displayInteger(int number, int place) {
+void SegmentLED::displayInteger(CRGB leds[], int number, int place) {
   number = (number / (int)pow(10, place)) % 10;
-  displayDigit(number);
+  displayDigit(leds, number);
 }
 
-void SegmentLED::simplePattern(int pos, int pattern[]) {
-  displayOff();
+void SegmentLED::simplePattern(CRGB leds[], int pos, int pattern[]) {
+  displayOff(leds);
   for (int current_led = 0; current_led < segment_size*7; current_led++) {
     if (pattern[ pos ] == current_led / segment_size) {
-      *segment_leds[current_led] = display_color;
+      leds[ end_led - current_led ] = display_color;
     } else {
-      *segment_leds[current_led] = CRGB::Black;
+      leds[ end_led - current_led ] = CRGB::Black;
     }
   }
 }
