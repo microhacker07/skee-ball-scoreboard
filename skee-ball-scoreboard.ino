@@ -34,10 +34,10 @@ int hole_points[] = {10, 20, 30, 50, 100, 100};
 
 int pattern_position;
 
-SegmentLED display_1(leds, 99, 3);
-SegmentLED display_2(leds, 78, 3);
-SegmentLED display_3(leds, 57, 3);
-SegmentLED display_4(leds, 36, 3);
+SegmentLED display_1(99, 3);
+SegmentLED display_2(78, 3);
+SegmentLED display_3(57, 3);
+SegmentLED display_4(36, 3);
 
 int rotate_pattern[] = {1,0,4,5,6,2,1};
 
@@ -162,28 +162,28 @@ void loop() {
 
     switch (randomInt) {
       case 0:
-      display_1.simplePattern(pattern_position, rotate_pattern);
-      display_2.simplePattern(pattern_position, rotate_pattern);
-      display_3.simplePattern(6 - pattern_position, rotate_pattern);
-      display_4.simplePattern(6 - pattern_position, rotate_pattern);
+      display_1.simplePattern(leds, pattern_position, rotate_pattern);
+      display_2.simplePattern(leds, pattern_position, rotate_pattern);
+      display_3.simplePattern(leds, 6 - pattern_position, rotate_pattern);
+      display_4.simplePattern(leds, 6 - pattern_position, rotate_pattern);
 
       pattern_position = (pattern_position + 1) % 6;
       break;
       
       case 1:
-      display_1.getSegmentFromPattern(pattern_position, two_rotate_pattern);
-      display_2.getSegmentFromPattern(pattern_position, two_rotate_pattern);
-      display_3.getSegmentFromPattern(3 - pattern_position, two_rotate_pattern);
-      display_4.getSegmentFromPattern(3 - pattern_position, two_rotate_pattern);
+      display_1.getSegmentFromPattern(leds, pattern_position, two_rotate_pattern);
+      display_2.getSegmentFromPattern(leds, pattern_position, two_rotate_pattern);
+      display_3.getSegmentFromPattern(leds, 3 - pattern_position, two_rotate_pattern);
+      display_4.getSegmentFromPattern(leds, 3 - pattern_position, two_rotate_pattern);
 
       pattern_position = (pattern_position + 1) % 3;
       break;
 
       case 2:
-      display_1.getSegmentFromPattern(3, play_text);
-      display_2.getSegmentFromPattern(2, play_text);
-      display_3.getSegmentFromPattern(1, play_text);
-      display_4.getSegmentFromPattern(0, play_text);
+      display_1.getSegmentFromPattern(leds, 3, play_text);
+      display_2.getSegmentFromPattern(leds, 2, play_text);
+      display_3.getSegmentFromPattern(leds, 1, play_text);
+      display_4.getSegmentFromPattern(leds, 0, play_text);
 
       if ( pattern_position % 10 < 3 ) clearDisplay();
 
@@ -198,17 +198,17 @@ void loop() {
 }
 
 void displayNumber(int number) {
-  display_1.displayInteger(number, 0);
-  display_2.displayInteger(number, 1);
-  display_3.displayInteger(number, 2);
-  display_4.displayInteger(number, 3);
+  display_1.displayInteger(leds, number, 0);
+  display_2.displayInteger(leds, number, 1);
+  display_3.displayInteger(leds, number, 2);
+  display_4.displayInteger(leds, number, 3);
 }
 
 void clearDisplay() {
-  display_1.displayOff();
-  display_2.displayOff();
-  display_3.displayOff();
-  display_4.displayOff();
+  display_1.displayOff(leds);
+  display_2.displayOff(leds);
+  display_3.displayOff(leds);
+  display_4.displayOff(leds);
 }
 
 void setDisplay(CRGB color) {

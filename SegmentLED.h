@@ -15,24 +15,23 @@ Created by Nathaniel Bock
 class SegmentLED
 {
 public:
-  SegmentLED(CRGB leds[], int last_led, int segment);
-  void getSegmentFromPattern(int index, byte pattern[]);
+  SegmentLED(int last_led, int segment);
+  void getSegmentFromPattern(CRGB leds[], int index, byte pattern[]);
   // Sets the segment to a pattern array in the form of 7 bits
 
-  void displayOff();
+  void displayOff(CRGB leds[]);
   // Turns Off the segment
-  void displayDigit(int digit);
+  void displayDigit(CRGB leds[], int digit);
   // Set the segment to a base 10 number
-  void displayInteger(int number, int place);
+  void displayInteger(CRGB leds[], int number, int place);
   // Set the segment to a digit at a certain number place in an integer 
 
-  void simplePattern(int pos, int pattern[]);
+  void simplePattern(CRGB leds[], int pos, int pattern[]);
   // Simplfied version of getSegmentFromPattern that simply turns on a single segment.
 
   CRGB display_color;
 
 private:
-  CRGB* segment_leds[21]; // Reference Array to original LEDs.
   int end_led;        // Last LED in the display
   int segment_size;   // Size of the segments. Ex: each segment has 3 leds
 
