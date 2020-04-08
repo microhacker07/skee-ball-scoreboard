@@ -12,7 +12,14 @@ Created by Nathaniel Bock
 
 SegmentLED::SegmentLED(int last_led, int segment) {
   end_led = last_led;
-  segment_size = segment;
+  segment_sizeX = segment;
+  segment_sizeY = segment;
+}
+
+SegmentLED::SegmentLED(int last_led, int segmentX, int segmentY) {
+  end_led = last_led;
+  segment_sizeX = segmentX;
+  segment_sizeY = segmentY;
 }
 
 void SegmentLED::getSegmentFromPattern(CRGB leds[], int index, byte pattern[]) {

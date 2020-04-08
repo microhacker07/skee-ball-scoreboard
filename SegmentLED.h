@@ -16,6 +16,7 @@ class SegmentLED
 {
 public:
   SegmentLED(int last_led, int segment);
+  SegmentLED(int last_led, int segmentX, int segmentY);
   void getSegmentFromPattern(CRGB leds[], int index, byte pattern[]);
   // Sets the segment to a pattern array in the form of 7 bits
 
@@ -33,8 +34,9 @@ public:
 
 private:
   int end_led;        // Last LED in the display
-  int segment_size;   // Size of the segments. Ex: each segment has 3 leds
-
+  int segment_sizeX;   // Size of the segments on the X axis.
+  int segment_sizeY;   // Size of the segments on the y axis.
+  
   // Segment code for representing hexdecimal. Stored as bytes to save space.
   const byte segment_from_hex[16] = {
   B1110111, // 0
